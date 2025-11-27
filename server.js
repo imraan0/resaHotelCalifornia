@@ -15,17 +15,17 @@ const __dirname = path.dirname(__filename);
 // Initialisation de l'application
 const app = express();
 
-// --- Configuration Moteur de Vue ---
+// Moteur de vue
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// --- Middlewares ---
+// Middlewares
 app.use(cors()); // Gestion des erreurs CORS
 app.use(express.urlencoded({ extended: true })); // Lecture des formulaires
 app.use(express.json()); // Lecture du JSON
 app.use(express.static(path.join(__dirname, 'public'))); // Fichiers statiques
 
-// --- Routes ---
+// Routes
 // Route racine
 app.get('/', (req, res) => {
     res.render('accueil', {
@@ -38,7 +38,7 @@ app.use('/chambres', routeChambres);
 app.use('/clients', routeClients);
 app.use('/accueil', routeAccueil);
 
-// --- Gestion 404 (Toujours à la fin) ---
+// 404
 app.use((req, res) => {
     res.status(404).render('error', {
         title: 'Page non trouvée',
@@ -46,7 +46,7 @@ app.use((req, res) => {
     });
 });
 
-// --- Démarrage Serveur ---
+// Démarrage serveur
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Serveur démarré sur http://localhost:${PORT}`);
