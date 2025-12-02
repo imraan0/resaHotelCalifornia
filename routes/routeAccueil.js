@@ -2,10 +2,9 @@ import express from 'express';
 
 const router = express.Router();
 
-// Route temporaire (en attendant les contrôleurs)
+//route
 router.get('/', (req, res) => {
-    res.send("Module accueil fonctionnel (en construction)");
+    res.render('index');
 });
 
-// INDISPENSABLE : C'est ce qui manque actuellement
 export default router;
