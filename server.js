@@ -7,6 +7,7 @@ import path from 'path';
 import routeAccueil from './routes/routeAccueil.js';
 import routeChambres from './routes/routeChambres.js';
 import routeClients from './routes/routeClients.js';
+import routeReservations from './routes/routeReservations.js';
 
 // Configuration des chemins pour ES Modules
 const __filename = fileURLToPath(import.meta.url);
@@ -36,6 +37,7 @@ app.get('/', (req, res) => {
 // Routes importées
 app.use('/chambres', routeChambres);
 app.use('/clients', routeClients);
+app.use('/reservations', routeReservations);
 app.use('/', routeAccueil);
 
 // 404
