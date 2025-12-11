@@ -1,9 +1,8 @@
 import ModelReservations from '../models/modelReservations.js';
-import ModelChambres from '../models/modelChambres.js';
-import ModelClients from '../models/modelClients.js';
 
-// Afficher toutes les réservations
-export async function list(req, res) {
+class controllerReservations {
+    // Afficher toutes les réservations
+ static async list(req, res) {
     try {
         const reservations = await ModelReservations.findAll(); // Récupère toutes les résas
         res.render('reservations/index', {
@@ -16,7 +15,7 @@ export async function list(req, res) {
 }
 
 // Afficher le formulaire de création
-export async function showCreateForm(req, res) {
+static async showCreateForm(req, res) {
     try {
         const chambres = await ModelChambres.findAll(); // Liste des chambres
         const clients = await ModelClients.findAll();   // Liste des clients
@@ -34,7 +33,7 @@ export async function showCreateForm(req, res) {
 }
 
 // Traiter l'ajout d'une réservation
-export async function create(req, res) {
+static async create(req, res) {
     try {
         const { idClient, idChambre, dateDebut, dateFin } = req.body;
         const errors = [];
@@ -65,7 +64,7 @@ export async function create(req, res) {
 }
 
 // Formulaire d’édition
-export async function showEditForm(req, res) {
+static async showEditForm(req, res) {
     try {
         const reservation = await ModelReservations.findById(req.params.id);
 
@@ -87,7 +86,7 @@ export async function showEditForm(req, res) {
 }
 
 // Traitement de modification
-export async function edit(req, res) {
+static async edit(req, res) {
     try {
         const { idClient, idChambre, dateDebut, dateFin } = req.body;
 
@@ -105,7 +104,7 @@ export async function edit(req, res) {
 }
 
 // Suppression
-export async function remove(req, res) {
+static async remove(req, res) {
     try {
         await ModelReservations.delete(req.params.id);
         res.redirect('/reservations');
@@ -113,4 +112,6 @@ export async function remove(req, res) {
         res.status(500).send(error.message);
     }
 }
-           
+}
+
+export default controllerReservations;
