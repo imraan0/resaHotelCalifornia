@@ -37,8 +37,7 @@ app.get('/', (req, res) => {
 // Routes importées
 app.use('/chambres', routeChambres);
 app.use('/clients', routeClients);
-app.use('/accueil', routeAccueil);
-app.use('/reservations', reservationRoutes);
+app.use('/', routeAccueil);
 
 // 404
 app.use((req, res) => {
