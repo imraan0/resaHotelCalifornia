@@ -137,6 +137,17 @@ class ControllerChambres {
     }
 
     //supprimer une chambre
+    static async deleteChambre(req, res) {
+        const id = req.params.id;
+        try {
+            await modelChambres.delete(id); 
+            res.redirect('/chambres'); 
+        }
+        catch (error) {
+            console.error('Erreur lors de la suppression:', error);
+            res.status(500).send('Erreur lors de la suppression de la chambre');
+        }
+    }
 
 }
 
