@@ -65,7 +65,7 @@ class ControllerChambres {
 
         }
         catch (error) {
-            // Si le modèle plante
+            // Si le modèle plante, serveur
             console.error(error);
             res.render('chambres/create', {
                 title: 'Ajouter une chambre',
