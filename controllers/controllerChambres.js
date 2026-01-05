@@ -153,9 +153,9 @@ class ControllerChambres {
     static async formDeleteChambre(req, res) {
         try {
             const id = req.params.id;
-            const chambres = await modelChambres.findbyid(id);
+            const chambre = await modelChambres.findbyid(id);
             
-            if (!chambres) {
+            if (!chambre) {
                 return res.status(404).send('Chambre introuvable');
             }
 
@@ -165,7 +165,7 @@ class ControllerChambres {
             // On rend la vue de confirmation de suppression
             res.render('chambres/delete', { 
                 title: 'Supprimer la chambre', 
-                chambres,
+                chambre,
                 nbReservations //nb de reservations liées à cette chambre
             });
 
@@ -174,7 +174,7 @@ class ControllerChambres {
             res.status(500).send('Erreur serveur');
         }
     }
-
+    
 }
 
 export default ControllerChambres;
