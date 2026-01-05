@@ -45,7 +45,7 @@ class ModelChambres { // Création du modèle Chambre
             return result.insertId; // Retourne l'ID de la nouvelle chambre créée
         }
         catch (error) {
-            if (error.code === 'ER_DUP_ENTRY') {
+            if (error.code === 'ER_DUP_ENTRY') { //erreur de doublon
                 throw new Error('Erreur : Le numéro de chambre existe déjà.');
             }
             throw new Error('Erreur lors de la création de la chambre: ' + error.message);
