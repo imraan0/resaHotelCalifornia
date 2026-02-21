@@ -39,20 +39,59 @@ npm install
 
 ### 2. Configuration de la Base de Données
 Créez une base de données nommée `resahotelcalifornia` dans MySQL.
-Exécutez le script SQL suivant pour créer la table des utilisateurs :
+Exécutez le script SQL suivant pour créer les tables :
+
 
 `sql`  
-CREATE TABLE utilisateurs (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    identifiant VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    role VARCHAR(50) DEFAULT 'employe',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
+**-- 1. Table utilisateurs**  
+
+CREATE TABLE utilisateurs (  
+    id INT AUTO_INCREMENT PRIMARY KEY,  
+    identifiant VARCHAR(50) NOT NULL UNIQUE,  
+    password VARCHAR(255) NOT NULL,  
+    role VARCHAR(50) DEFAULT 'employe',  
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP  
+)
+
+**-- 2. Table des Clients**    
+
+CREATE TABLE clients (  
+    idClient INT AUTO_INCREMENT PRIMARY KEY,  
+    nom VARCHAR(100) NOT NULL,  
+    prenom VARCHAR(100) NOT NULL,  
+    telephone VARCHAR(20),  
+    email VARCHAR(150)  
 );
 
+**-- 3. Table des Chambres**  
 
+CREATE TABLE chambres (  
+    idChambre INT AUTO_INCREMENT PRIMARY KEY,  
+    numero INT NOT NULL,  
+    capacite INT NOT NULL,  
+    disponibilite TINYINT(1) DEFAULT 1 
+);  
 
-*(Note : Ajoutez également vos tables pour les chambres, clients et réservations).*
+**-- 4. Table des Réservations (avec les liens vers Clients et Chambres)**  
+
+CREATE TABLE reservations (  
+    idReservation INT AUTO_INCREMENT PRIMARY KEY,  
+    idClient INT NOT NULL,  
+    idChambre INT NOT NULL,  
+    dateDebut DATE NOT NULL,  
+    dateFin DATE NOT NULL,  
+
+    
+Contraintes de Clés Étrangères (Foreign Keys)  
+CONSTRAINT fk_reservation_client   
+FOREIGN KEY (idClient) REFERENCES clients(idClient)   
+ON DELETE CASCADE, -- Si on supprime un client, ses réservations  sautent aussi  
+        
+CONSTRAINT fk_reservation_chambre   
+FOREIGN KEY (idChambre) REFERENCES chambres(idChambre)   
+ON DELETE CASCADE  
+);
 
 ### 3. Configuration SSL (HTTPS)
 Créez un dossier `ssl` à la racine du projet et placez-y vos certificats :
