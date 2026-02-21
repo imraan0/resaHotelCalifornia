@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 import https from 'https';
 import fs from 'fs';
+import session from 'express-session'; // pour cookie session
 
 // Import des routes
 import routeAccueil from './routes/routeAccueil.js';
@@ -27,6 +28,17 @@ app.use(cors()); // Gestion des erreurs CORS
 app.use(express.urlencoded({ extended: true })); // Lecture des formulaires
 app.use(express.json()); // Lecture du JSON
 app.use(express.static(path.join(__dirname, 'public'))); // Fichiers statiques
+app.use(session({
+    secret: 'les chaussettes de l\'archiduchesse sont elles sèches archi sèches ?', // Ta fameuse clé de signature
+    resave: false, // Évite de sauvegarder la session si elle n'a pas été modifiée (perf)
+    saveUninitialized: false, // Ne crée pas de cookie tant qu'on n'a rien stocké dedans (GDPR)
+    cookie: { 
+        secure: true, // https donc cookie sécurisé
+        httpOnly: true, // Empêche le JavaScript client de lire le cookie (Protection XSS)
+        maxAge: 1000 * 60 * 60 * 24 // 24 h de durée de vie du cookie
+    }
+}));
+
 
 // Routes
 // Route racine
@@ -34,6 +46,11 @@ app.get('/', (req, res) => {
     res.render('index', {
         title: 'Hôtel California - Système de Gestion'
     });
+});
+
+// Route pour afficher le formulaire de connexion
+app.get('/login', (req, res) => {
+    res.render('login', { error: null }); // On envoie error: null pour ne pas afficher d'erreur au début
 });
 
 // Routes importées
